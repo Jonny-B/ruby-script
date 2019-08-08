@@ -366,6 +366,14 @@ class Collect extends Array {
         }
         return null;
     }
+
+    initialize_copy(copy) {
+        this.clear();
+        for (let i = 0; i < copy.length; i++) {
+            this.push(copy[i])
+        }
+        return this;
+    }
 }
 
 module.exports = Collection;

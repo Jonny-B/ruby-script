@@ -505,3 +505,14 @@ collection.index(5);
 collection.index((element) => { return element * 2 === 4})
 //=> 1
 ```
+
+### initialize_copy
+Replaces the contents of _this_ with the contents of other _array_ or _collection_, truncating or expanding if necessary.
+
+See also .replace
+```js
+collection = Collection([1,2,3,4]);
+
+collection.initialize_copy(['a','b','c'])
+//=> ['a','b','c']
+```

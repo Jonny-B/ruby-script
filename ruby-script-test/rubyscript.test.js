@@ -944,5 +944,31 @@ describe('ruby-script', () => {
             let collection = Collection([1, 2, 3, 4]);
             expect(collection.index()).toBe(collection);
         });
+    });
+
+    describe('initialize_copy', () => {
+        it('should replace this with other collection', () => {
+            let collection = Collection([1,2,3,4]);
+            let other = Collection(['a','b','c']);
+
+            collection.initialize_copy(other);
+            expect(collection).toEqual(other);
+        });
+
+        it('should replace this with other array', () => {
+            let collection = Collection([1,2,3,4]);
+            let other = ['a','b','c'];
+
+            collection.initialize_copy(other);
+            expect(collection).toEqual(other);
+        });
+
+        it('should result in a collection', () => {
+            let collection = Collection([1,2,3,4]);
+            let other = ['a','b','c'];
+
+            collection.initialize_copy(other);
+            expect(collection.isCollection()).toEqual(true);
+        });
     })
 });
