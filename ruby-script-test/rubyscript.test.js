@@ -886,8 +886,9 @@ describe('ruby-script', () => {
     describe('flatten_', () => {
         it('should flatten this as a single dimensional collection', () => {
             let collection = Collection([1, [2, 3, 4], [5, [6]]]);
+            collection.flatten_();
 
-            expect(collection.flatten()).toEqual([1, 2, 3, 4, 5, 6]);
+            expect(collection).toEqual([1, 2, 3, 4, 5, 6]);
         });
 
         it('should return a collection', () => {
@@ -907,21 +908,22 @@ describe('ruby-script', () => {
         it('should flattened this only one dimension deep when 1 is provided', () => {
             let collection = Collection([1, [2, 3, [4]], [5, [6]]]);
             let result = Collection([1, 2, 3, [4], 5, [6]]);
+            collection.flatten_(1);
 
-            expect(collection.flatten(1)).toEqual(result);
+            expect(collection).toEqual(result);
         });
 
         it('should flattened this only two dimensions deep when 2 is provided', () => {
             let collection = Collection([1, [2, 3, 4], [5, [6, [7]]]]);
             let result = Collection([1, 2, 3, 4, 5, 6, [7]]);
-
-            expect(collection.flatten(2)).toEqual(result);
+            collection.flatten_(2);
+            expect(collection).toEqual(result);
         });
 
         it('should flatten this completely if argument greater than depth is provided', () => {
             let collection = Collection([1, [2, 3, 4], [5, [6]]]);
-
-            expect(collection.flatten(100)).toEqual([1, 2, 3, 4, 5, 6]);
+            collection.flatten_(100);
+            expect(collection).toEqual([1, 2, 3, 4, 5, 6]);
         });
 
         it('should flatten this a mixture of arrays and collections', () => {
@@ -929,7 +931,8 @@ describe('ruby-script', () => {
             let collection2 = Collection([[7, 8]]);
             collection.push(collection2);
 
-            expect(collection.flatten()).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
+            collection.flatten_();
+            expect(collection).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
         });
     });
 

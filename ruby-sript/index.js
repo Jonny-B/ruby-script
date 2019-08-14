@@ -343,7 +343,7 @@ class Collect extends Array {
         return result
     }
 
-    flatten_(stop = -1, result = new Collect([]), count = 0) {
+    flatten_(stop = -1, result = new Collect([]), count = 0, original=this) {
         let flatten = Collection(this);
         this.length = 0;
         let flattened = false;
@@ -353,13 +353,13 @@ class Collect extends Array {
                 let recurse = new Collect(flatten[i]);
                 if (count === stop) {
                     result.push(flatten[i]);
-                    this.push(flatten[i]);
+                    original.push(flatten[i]);
                     break
                 }
-                recurse.flatten(stop, result, count + 1)
+                recurse.flatten_(stop, result, count + 1, original)
             } else {
                 result.push(flatten[i]);
-                this.push(flatten[i]);
+                original.push(flatten[i]);
             }
         }
 
@@ -415,12 +415,7 @@ class Collect extends Array {
             }
         }
 
-        // TODO ask why this.flatten_() doesn't modify this. I shouldn't have to do this extra step of making and looping a copy. This hacky code should only be temporary.
-        let copy = this.flatten();
-        this.length = 0;
-        for (let i = 0; i < copy.length; i++) {
-            this.push(copy[i])
-        }
+        this.flatten_()
     }
 }
 
