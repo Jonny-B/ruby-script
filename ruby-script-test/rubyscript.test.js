@@ -1053,5 +1053,28 @@ describe('ruby-script', () => {
             collection.insert(-2, 6, 7, 8);
             expect(collection).toEqual([1,2,4,6,7,8,5]);
         });
-    })
+    });
+
+    // describe('inspect', () => {
+    //     it('should return a string of representing numbers', () => {
+    //         let collection = Collection([1,2,3,4]);
+    //
+    //         let inspect = collection.inspect();
+    //         expect(collection).toEqual("[1,2,3,4]");
+    //     });
+    //
+    //     it('should return a string with escape chars in front of quotes', () => {
+    //         let collection = Collection(['a', 'b', "c"]);
+    //
+    //         let inspect = collection.inspect();
+    //         expect(collection).toEqual("[\"a\", \"b\", \"c\"]");
+    //     });
+    //
+    //     it('should return a string of object', () => {
+    //         let collection = Collection([{test: 1}]);
+    //
+    //         let inspect = collection.inspect();
+    //         expect(collection).toEqual('[{test: 1}]');
+    //     });
+    // })
 });

@@ -556,3 +556,23 @@ collection.insert(-1,6);
 collection.insert(-1,6,7,8)
 //=> [1,2,4,5,6,7,8]
 ```
+
+### inspect
+Creates a string representation of _this_.
+
+See also .to_s
+
+```js
+collection = Collection([1,2,4,5]);
+collection2 = Collection(['a', 'b', 'c']);
+collection3 = Collection([{test: 1}])
+
+collection.inspect();
+//=> "[1,2,3,4]"
+
+collection2.inspect();
+//=> "[\"a\", \"b\", \"c\"]"
+
+collection3.inspect();
+//=> [{test: 1}]
+```
