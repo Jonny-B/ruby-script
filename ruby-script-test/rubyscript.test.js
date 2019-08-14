@@ -868,7 +868,7 @@ describe('ruby-script', () => {
 
         it('should flatten completely if argument greater than depth is provided', () => {
             let collection = Collection([1, [2, 3, 4], [5, [6]]]);
-            let flatten = collection.flatten();
+            let flatten = collection.flatten(100);
 
             expect(flatten).toEqual([1, 2, 3, 4, 5, 6]);
         });
@@ -880,6 +880,56 @@ describe('ruby-script', () => {
             let flatten = collection.flatten();
 
             expect(flatten).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
+        });
+    });
+
+    describe('flatten_', () => {
+        it('should flatten this as a single dimensional collection', () => {
+            let collection = Collection([1, [2, 3, 4], [5, [6]]]);
+
+            expect(collection.flatten()).toEqual([1, 2, 3, 4, 5, 6]);
+        });
+
+        it('should return a collection', () => {
+            let collection = Collection([1, [2, 3, 4], [5, [6]]]);
+            let flatten = collection.flatten_();
+
+            expect(flatten.isCollection()).toBe(true);
+        });
+
+        it('should return null if no modifications were made', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let flatten = collection.flatten_();
+
+            expect(flatten).toBe(null);
+        });
+
+        it('should flattened this only one dimension deep when 1 is provided', () => {
+            let collection = Collection([1, [2, 3, [4]], [5, [6]]]);
+            let result = Collection([1, 2, 3, [4], 5, [6]]);
+
+            expect(collection.flatten(1)).toEqual(result);
+        });
+
+        it('should flattened this only two dimensions deep when 2 is provided', () => {
+            let collection = Collection([1, [2, 3, 4], [5, [6, [7]]]]);
+            let result = Collection([1, 2, 3, 4, 5, 6, [7]]);
+
+            expect(collection.flatten(2)).toEqual(result);
+        });
+
+        it('should flatten this completely if argument greater than depth is provided', () => {
+            let collection = Collection([1, [2, 3, 4], [5, [6]]]);
+
+            expect(collection.flatten(100)).toEqual([1, 2, 3, 4, 5, 6]);
+        });
+
+        it('should flatten this a mixture of arrays and collections', () => {
+            let collection = Collection([1, [2, 3, 4], [5, [6]]]);
+            let collection2 = Collection([[7, 8]]);
+            collection.push(collection2);
+
+            expect(collection.flatten()).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
         });
     });
 
@@ -969,6 +1019,36 @@ describe('ruby-script', () => {
 
             collection.initialize_copy(other);
             expect(collection.isCollection()).toEqual(true);
+        });
+    });
+
+    describe('insert', () => {
+        it('should append given value before given index', () => {
+            let collection = Collection([1,2,4,5]);
+
+            collection.insert(2, 3);
+            expect(collection).toEqual([1,2,3,4,5]);
+        });
+
+        it('should append given value after given negative index', () => {
+            let collection = Collection([1,2,4,5]);
+
+            collection.insert(-1, 6);
+            expect(collection).toEqual([1,2,4,5,6]);
+        });
+
+        it('should append given values after given negative index', () => {
+            let collection = Collection([1,2,4,5]);
+
+            collection.insert(-1, 6, 7, 8);
+            expect(collection).toEqual([1,2,4,5,6,7,8]);
+        });
+
+        it('should append given values after given negative index', () => {
+            let collection = Collection([1,2,4,5]);
+
+            collection.insert(-2, 6, 7, 8);
+            expect(collection).toEqual([1,2,4,6,7,8,5]);
         });
     })
 });

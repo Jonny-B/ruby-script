@@ -343,6 +343,29 @@ class Collect extends Array {
         return result
     }
 
+    flatten_(stop = -1, result = new Collect([]), count = 0) {
+        let flatten = Collection(this);
+        this.length = 0;
+        let flattened = false;
+        for (let i = 0; i < flatten.length; i++) {
+            if (Array.isArray(flatten[i])) {
+                flattened = true;
+                let recurse = new Collect(flatten[i]);
+                if (count === stop) {
+                    result.push(flatten[i]);
+                    this.push(flatten[i]);
+                    break
+                }
+                recurse.flatten(stop, result, count + 1)
+            } else {
+                result.push(flatten[i]);
+                this.push(flatten[i]);
+            }
+        }
+
+        return flattened ? result : null;
+    }
+
     include(value) {
         for (let i = 0; i < this.length; i++) {
             if (Array.isArray(value)) {
@@ -373,6 +396,31 @@ class Collect extends Array {
             this.push(copy[i])
         }
         return this;
+    }
+
+    insert(index, ...values) {
+        let ind;
+        index < 0 ? ind = this.length + index : ind = index;
+        let insert = Collection(this);
+        this.length = 0;
+        for (let i = 0; i < insert.length; i++) {
+            if (i === ind && index < 1) {
+                this.push(insert[i]);
+                this.push(values);
+            } else if (i === ind) {
+                this.push(values);
+                this.push(insert[i]);
+            } else {
+                this.push(insert[i])
+            }
+        }
+
+        // TODO ask why this.flatten_() doesn't modify this. I shouldn't have to do this extra step of making and looping a copy. This hacky code should only be temporary.
+        let copy = this.flatten();
+        this.length = 0;
+        for (let i = 0; i < copy.length; i++) {
+            this.push(copy[i])
+        }
     }
 }
 

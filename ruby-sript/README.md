@@ -466,6 +466,26 @@ collection.flatten(1);
 //=> [1,2,3,4,5,[6]]
 ```
 
+### flatten_
+Flattens _this_ in place.
+
+Returns _null_ if no modifications were made (i.e, the _collection_ contains no sub-collections or sub-arrays)
+
+The optional level argument determines the level of recursion to flatten
+```js
+collection = Collection([1, [2, 3, 4], [5,[6]]]);
+collection = Collection2([1, 2, 3, 4]);
+
+collection.flatten_();
+//=> [1,2,3,4,5,6]
+
+collection.flatten_(1);
+//=> [1,2,3,4,5,[6]]
+
+collection2.flatten_()
+//=> null
+```
+
 ### include
 Returns _true_ if the given _value_ is present in _this_ (that is, if any element _===_ value)
 otherwise return _false_.
@@ -515,4 +535,24 @@ collection = Collection([1,2,3,4]);
 
 collection.initialize_copy(['a','b','c'])
 //=> ['a','b','c']
+```
+
+### insert
+Inserts the given value(s) before the element with the given index.
+
+Negative indices count backwards from the end of the _collection_, where _-1_ is the last element. If a negative index
+is used, the given values will be inserted after that element, so using an index of _-1_ will insert the values at the
+_collection_.
+
+```js
+collection = Collection([1,2,4,5]);
+
+collection.insert(2,3);
+//=> [1,2,3,4,5]
+
+collection.insert(-1,6);
+//=> [1,2,4,5,6]
+
+collection.insert(-1,6,7,8)
+//=> [1,2,4,5,6,7,8]
 ```
