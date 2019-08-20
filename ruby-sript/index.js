@@ -343,7 +343,7 @@ class Collect extends Array {
         return result
     }
 
-    flatten_(stop = -1, result = new Collect([]), count = 0, original=this) {
+    flatten_(stop = -1, result = new Collect([]), count = 0, original = this) {
         let flatten = Collection(this);
         this.length = 0;
         let flattened = false;
@@ -416,6 +416,54 @@ class Collect extends Array {
         }
 
         this.flatten_()
+    }
+
+    inspect() {
+        let insp = ``;
+
+        const processValue = (value) => {
+            if (typeof value === 'string') {
+                return `\"${value}\"`
+            } else if (typeof value === 'object') {
+                if (Array.isArray(value)) {
+                    return Collection(value).inspect();
+                } else {
+                    let result = '';
+                    for (let i = 0; i < Object.keys(value).length; i++) {
+                        if (Object.keys(value).length === 1) {
+                            result += `{${Object.keys(value)[i]}: ${processValue(value[Object.keys(value)[i]])}}`
+                        }
+                        else if (i === 0) {
+                            result += `{${Object.keys(value)[i]}: ${processValue(value[Object.keys(value)[i]])}, `
+                        }
+                        else if (i === Object.keys(value).length - 1) {
+                            result += `${Object.keys(value)[i]}: ${processValue(value[Object.keys(value)[i]])}}`
+                        }
+                        else {
+                            result += `${Object.keys(value)[i]}: ${processValue(value[Object.keys(value)[i]])}, `
+                        }
+                    }
+                    return result;
+                }
+            } else {
+                return value
+            }
+        };
+
+        for (let i = 0; i < this.length; i++) {
+            if (this.length === 1) {
+                insp += `[${processValue(this[i])}]`
+            }
+            else if (i === 0) {
+                insp += `[${processValue(this[i])}, `
+            } else if (i === this.length - 1) {
+                insp += `${processValue(this[i])}]`
+            } else {
+                insp += `${processValue(this[i])}, `
+            }
+        }
+
+        return insp;
     }
 }
 

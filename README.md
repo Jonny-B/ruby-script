@@ -565,7 +565,7 @@ See also .to_s
 ```js
 collection = Collection([1,2,4,5]);
 collection2 = Collection(['a', 'b', 'c']);
-collection3 = Collection([{test: 1}])
+collection3 = Collection([{test: 1}]);
 
 collection.inspect();
 //=> "[1,2,3,4]"

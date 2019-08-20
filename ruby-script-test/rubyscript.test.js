@@ -1055,26 +1055,47 @@ describe('ruby-script', () => {
         });
     });
 
-    // describe('inspect', () => {
-    //     it('should return a string of representing numbers', () => {
-    //         let collection = Collection([1,2,3,4]);
-    //
-    //         let inspect = collection.inspect();
-    //         expect(collection).toEqual("[1,2,3,4]");
-    //     });
-    //
-    //     it('should return a string with escape chars in front of quotes', () => {
-    //         let collection = Collection(['a', 'b', "c"]);
-    //
-    //         let inspect = collection.inspect();
-    //         expect(collection).toEqual("[\"a\", \"b\", \"c\"]");
-    //     });
-    //
-    //     it('should return a string of object', () => {
-    //         let collection = Collection([{test: 1}]);
-    //
-    //         let inspect = collection.inspect();
-    //         expect(collection).toEqual('[{test: 1}]');
-    //     });
-    // })
+    describe('inspect', () => {
+        it('should return a string of representing numbers', () => {
+            let collection = Collection([1,2,3,4]);
+
+            let inspect = collection.inspect();
+            expect(inspect).toEqual("[1, 2, 3, 4]");
+        });
+
+        it('should return a string with escape chars in front of quotes', () => {
+            let collection = Collection(['a', 'b', "c"]);
+
+            let inspect = collection.inspect();
+            expect(inspect).toEqual("[\"a\", \"b\", \"c\"]");
+        });
+
+        it('should return a string of objects', () => {
+            let collection = Collection([{test1: 1, test2: 2}, {test3: 3}]);
+
+            let inspect = collection.inspect();
+            expect(inspect).toEqual('[{test1: 1, test2: 2}, {test3: 3}]');
+        });
+
+        it('should return a string of nested arrays', () => {
+            let collection = Collection([1,[2],3]);
+
+            let inspect = collection.inspect();
+            expect(inspect).toEqual('[1, [2], 3]');
+        });
+
+        it('should return a string of objects when array is only one in length', () => {
+            let collection = Collection([{test: 1}]);
+
+            let inspect = collection.inspect();
+            expect(inspect).toEqual('[{test: 1}]');
+        });
+
+        it('should return a string of representing numbers when array is only one in length', () => {
+            let collection = Collection([1]);
+
+            let inspect = collection.inspect();
+            expect(inspect).toEqual("[1]");
+        });
+    })
 });
