@@ -563,7 +563,7 @@ Creates a string representation of _this_.
 See also .to_s
 
 ```js
-collection = Collection([1,2,4,5]);
+collection = Collection([1,2,3,4]);
 collection2 = Collection(['a', 'b', 'c']);
 collection3 = Collection([{test: 1}]);
 
@@ -574,5 +574,19 @@ collection2.inspect();
 //=> "[\"a\", \"b\", \"c\"]"
 
 collection3.inspect();
-//=> [{test: 1}]
+//=> "[{test: 1}]"
+```
+
+### join
+Returns a string created by converting each element of the array to a string, separated by the given separator. 
+If the separator is _null_ it uses an empty string.
+
+```js
+collection = Collection([1,2,3,4]);
+
+collection.join();
+//=> "1234"
+
+collection.join("-");
+//=> "1-2-3-4"
 ```

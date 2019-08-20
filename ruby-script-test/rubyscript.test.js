@@ -1097,5 +1097,49 @@ describe('ruby-script', () => {
             let inspect = collection.inspect();
             expect(inspect).toEqual("[1]");
         });
+    });
+
+    describe('join', () => {
+        it('should join with no separator', () => {
+            let collection = Collection([1,2,3,4]);
+
+            let join = collection.join();
+            expect(join).toEqual("1234");
+        });
+
+        it('should join with given separator', () => {
+            let collection = Collection([1,2,3,4]);
+
+            let join = collection.join("-");
+            expect(join).toEqual("1-2-3-4");
+        });
+
+        it('should handle nested arrays', () => {
+            let collection = Collection([1,2, [3], 4]);
+
+            let join = collection.join("-");
+            expect(join).toEqual("1-2-3-4");
+        });
+
+        it('should handle nested objects', () => {
+            let collection = Collection([1,2,{test: 3},4]);
+
+            let join = collection.join("-");
+            expect(join).toEqual("1-2-{test: 3}-4");
+        });
+
+        it('should handle collection with one element', () => {
+            let collection = Collection([1]);
+
+            let join = collection.join("-");
+            expect(join).toEqual("1");
+        });
+
+        it('should handle collection with zero elements', () => {
+            let collection = Collection([]);
+
+            let join = collection.join("-");
+            expect(join).toEqual("");
+        });
     })
 });

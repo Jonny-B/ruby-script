@@ -432,14 +432,11 @@ class Collect extends Array {
                     for (let i = 0; i < Object.keys(value).length; i++) {
                         if (Object.keys(value).length === 1) {
                             result += `{${Object.keys(value)[i]}: ${processValue(value[Object.keys(value)[i]])}}`
-                        }
-                        else if (i === 0) {
+                        } else if (i === 0) {
                             result += `{${Object.keys(value)[i]}: ${processValue(value[Object.keys(value)[i]])}, `
-                        }
-                        else if (i === Object.keys(value).length - 1) {
+                        } else if (i === Object.keys(value).length - 1) {
                             result += `${Object.keys(value)[i]}: ${processValue(value[Object.keys(value)[i]])}}`
-                        }
-                        else {
+                        } else {
                             result += `${Object.keys(value)[i]}: ${processValue(value[Object.keys(value)[i]])}, `
                         }
                     }
@@ -453,8 +450,7 @@ class Collect extends Array {
         for (let i = 0; i < this.length; i++) {
             if (this.length === 1) {
                 insp += `[${processValue(this[i])}]`
-            }
-            else if (i === 0) {
+            } else if (i === 0) {
                 insp += `[${processValue(this[i])}, `
             } else if (i === this.length - 1) {
                 insp += `${processValue(this[i])}]`
@@ -464,6 +460,48 @@ class Collect extends Array {
         }
 
         return insp;
+    }
+
+    join(separator = "") {
+        let join = "";
+        this.flatten_();
+
+        const processValue = (value) => {
+             if (typeof value === 'object') {
+                if (Array.isArray(value)) {
+                    return Collection(value).inspect();
+                } else {
+                    let result = '';
+                    for (let i = 0; i < Object.keys(value).length; i++) {
+                        if (Object.keys(value).length === 1) {
+                            result += `{${Object.keys(value)[i]}: ${processValue(value[Object.keys(value)[i]])}}`
+                        } else if (i === 0) {
+                            result += `{${Object.keys(value)[i]}: ${processValue(value[Object.keys(value)[i]])}, `
+                        } else if (i === Object.keys(value).length - 1) {
+                            result += `${Object.keys(value)[i]}: ${processValue(value[Object.keys(value)[i]])}}`
+                        } else {
+                            result += `${Object.keys(value)[i]}: ${processValue(value[Object.keys(value)[i]])}, `
+                        }
+                    }
+                    return result;
+                }
+            } else {
+                return value
+            }
+        };
+
+        for (let i = 0; i < this.length; i++) {
+            if (this.length === 0) {
+                join = "";
+            } else if (this.length === 1) {
+                join += `${processValue(this[i])}`
+            } else if (i === this.length - 1) {
+                join += `${processValue(this[i])}`
+            } else {
+                join += `${processValue(this[i])}${separator}`
+            }
+        }
+        return join;
     }
 }
 
