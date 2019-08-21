@@ -1141,5 +1141,15 @@ describe('ruby-script', () => {
             let join = collection.join("-");
             expect(join).toEqual("");
         });
+    });
+
+    describe('keep_if', () => {
+        it('should delete of this that does not evaluate to true', () => {
+            let collection = Collection([1,2,3,4]);
+
+            collection.keep_if((x) => {return x===2});
+
+            expect(collection).toEqual([2]);
+        });
     })
 });

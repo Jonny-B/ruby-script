@@ -503,6 +503,17 @@ class Collect extends Array {
         }
         return join;
     }
+
+    keep_if(callback) {
+        if (callback === undefined) return null;
+        let keep_if = Collection(this);
+
+        this.length = 0;
+
+        for(let i = 0; i<keep_if.length; i++){
+            if (callback(keep_if[i])) this.push(keep_if[i]);
+        }
+    }
 }
 
 module.exports = Collection;

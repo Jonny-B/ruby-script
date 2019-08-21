@@ -590,3 +590,15 @@ collection.join();
 collection.join("-");
 //=> "1-2-3-4"
 ```
+
+### keep_if
+Deletes every element of _this_ for which the given block evaluates for _false_
+
+See also .select
+
+```js
+collection = Collection([1,2,3,4]);
+
+collection.keep_if((x) => {return x === 2});
+//=> [2]
+```
