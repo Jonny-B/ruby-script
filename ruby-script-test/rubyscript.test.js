@@ -1001,24 +1001,24 @@ describe('ruby-script', () => {
 
     describe('initialize_copy', () => {
         it('should replace this with other collection', () => {
-            let collection = Collection([1,2,3,4]);
-            let other = Collection(['a','b','c']);
+            let collection = Collection([1, 2, 3, 4]);
+            let other = Collection(['a', 'b', 'c']);
 
             collection.initialize_copy(other);
             expect(collection).toEqual(other);
         });
 
         it('should replace this with other array', () => {
-            let collection = Collection([1,2,3,4]);
-            let other = ['a','b','c'];
+            let collection = Collection([1, 2, 3, 4]);
+            let other = ['a', 'b', 'c'];
 
             collection.initialize_copy(other);
             expect(collection).toEqual(other);
         });
 
         it('should result in a collection', () => {
-            let collection = Collection([1,2,3,4]);
-            let other = ['a','b','c'];
+            let collection = Collection([1, 2, 3, 4]);
+            let other = ['a', 'b', 'c'];
 
             collection.initialize_copy(other);
             expect(collection.isCollection()).toEqual(true);
@@ -1027,37 +1027,37 @@ describe('ruby-script', () => {
 
     describe('insert', () => {
         it('should append given value before given index', () => {
-            let collection = Collection([1,2,4,5]);
+            let collection = Collection([1, 2, 4, 5]);
 
             collection.insert(2, 3);
-            expect(collection).toEqual([1,2,3,4,5]);
+            expect(collection).toEqual([1, 2, 3, 4, 5]);
         });
 
         it('should append given value after given negative index', () => {
-            let collection = Collection([1,2,4,5]);
+            let collection = Collection([1, 2, 4, 5]);
 
             collection.insert(-1, 6);
-            expect(collection).toEqual([1,2,4,5,6]);
+            expect(collection).toEqual([1, 2, 4, 5, 6]);
         });
 
         it('should append given values after given negative index', () => {
-            let collection = Collection([1,2,4,5]);
+            let collection = Collection([1, 2, 4, 5]);
 
             collection.insert(-1, 6, 7, 8);
-            expect(collection).toEqual([1,2,4,5,6,7,8]);
+            expect(collection).toEqual([1, 2, 4, 5, 6, 7, 8]);
         });
 
         it('should append given values after given negative index', () => {
-            let collection = Collection([1,2,4,5]);
+            let collection = Collection([1, 2, 4, 5]);
 
             collection.insert(-2, 6, 7, 8);
-            expect(collection).toEqual([1,2,4,6,7,8,5]);
+            expect(collection).toEqual([1, 2, 4, 6, 7, 8, 5]);
         });
     });
 
     describe('inspect', () => {
         it('should return a string of representing numbers', () => {
-            let collection = Collection([1,2,3,4]);
+            let collection = Collection([1, 2, 3, 4]);
 
             let inspect = collection.inspect();
             expect(inspect).toEqual("[1, 2, 3, 4]");
@@ -1078,7 +1078,7 @@ describe('ruby-script', () => {
         });
 
         it('should return a string of nested arrays', () => {
-            let collection = Collection([1,[2],3]);
+            let collection = Collection([1, [2], 3]);
 
             let inspect = collection.inspect();
             expect(inspect).toEqual('[1, [2], 3]');
@@ -1101,28 +1101,28 @@ describe('ruby-script', () => {
 
     describe('join', () => {
         it('should join with no separator', () => {
-            let collection = Collection([1,2,3,4]);
+            let collection = Collection([1, 2, 3, 4]);
 
             let join = collection.join();
             expect(join).toEqual("1234");
         });
 
         it('should join with given separator', () => {
-            let collection = Collection([1,2,3,4]);
+            let collection = Collection([1, 2, 3, 4]);
 
             let join = collection.join("-");
             expect(join).toEqual("1-2-3-4");
         });
 
         it('should handle nested arrays', () => {
-            let collection = Collection([1,2, [3], 4]);
+            let collection = Collection([1, 2, [3], 4]);
 
             let join = collection.join("-");
             expect(join).toEqual("1-2-3-4");
         });
 
         it('should handle nested objects', () => {
-            let collection = Collection([1,2,{test: 3},4]);
+            let collection = Collection([1, 2, {test: 3}, 4]);
 
             let join = collection.join("-");
             expect(join).toEqual("1-2-{test: 3}-4");
@@ -1145,11 +1145,65 @@ describe('ruby-script', () => {
 
     describe('keep_if', () => {
         it('should delete of this that does not evaluate to true', () => {
-            let collection = Collection([1,2,3,4]);
+            let collection = Collection([1, 2, 3, 4]);
 
-            collection.keep_if((x) => {return x===2});
+            collection.keep_if((x) => {
+                return x === 2
+            });
 
             expect(collection).toEqual([2]);
+        });
+    });
+
+    describe('last', () => {
+        it('should get the last element in collection', () => {
+            let collection = Collection([1, 2, 3, 4]);
+
+            let last = collection.last();
+
+            expect(last).toEqual(4);
+        });
+
+        it('should get the last n elements in collection', () => {
+            let collection = Collection([1, 2, 3, 4]);
+
+            let last = collection.last(2);
+
+            expect(last).toEqual([3, 4]);
+        });
+
+        it('should get the last n elements in collection as a collection', () => {
+            let collection = Collection([1, 2, 3, 4]);
+
+            let last = collection.last(2);
+
+            expect(last.isCollection()).toEqual(true);
+        });
+
+        it('should handle zero as an argument', () => {
+            let collection = Collection([1, 2, 3, 4]);
+
+            let last = collection.last(0);
+
+            expect(last).toEqual([]);
+        });
+    });
+
+    describe('length', () => {
+        it('should return the length of the collection', () => {
+            let collection = Collection([1, 2, 3, 4]);
+
+            let length = collection.length();
+
+            expect(length).toEqual(4);
+        });
+
+        it('should return 0 when collection is empty', () => {
+            let collection = Collection([]);
+
+            let length = collection.length();
+
+            expect(length).toEqual(0);
         });
     })
 });

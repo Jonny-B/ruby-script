@@ -594,11 +594,40 @@ collection.join("-");
 ### keep_if
 Deletes every element of _this_ for which the given block evaluates for _false_
 
-See also .select
+See also _.select_
 
 ```js
 collection = Collection([1,2,3,4]);
 
 collection.keep_if((x) => {return x === 2});
 //=> [2]
+```
+
+### last
+Returns the last element(s) of self. If the array is empty, the first form returns _null_.
+
+See also _.first_ for the opposite effect.
+
+```js
+collection = Collection([1,2,3,4]);
+
+collection.last();
+//=> 4
+
+collection.last(2);
+//=> [3,4]
+```
+
+### length
+Returns the number of element in _this_. May be zero.
+
+```js
+collection = Collection1([1,2,3,4]);
+collection = Collection2([]);
+
+collection1.length();
+//=> 4
+
+collection.length();
+//=> 0
 ```

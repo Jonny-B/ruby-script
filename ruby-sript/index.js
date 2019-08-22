@@ -467,7 +467,7 @@ class Collect extends Array {
         this.flatten_();
 
         const processValue = (value) => {
-             if (typeof value === 'object') {
+            if (typeof value === 'object') {
                 if (Array.isArray(value)) {
                     return Collection(value).inspect();
                 } else {
@@ -510,9 +510,26 @@ class Collect extends Array {
 
         this.length = 0;
 
-        for(let i = 0; i<keep_if.length; i++){
+        for (let i = 0; i < keep_if.length; i++) {
             if (callback(keep_if[i])) this.push(keep_if[i]);
         }
+    }
+
+    last(range = 1) {
+        let last = Collection([]);
+
+        for (let i = (this.length - range); i < this.length; i++) {
+            if (range === 1) {
+                last = this[i]
+            } else {
+                last.push(this[i])
+            }
+        }
+        return last;
+    }
+
+    length() {
+        return this.length
     }
 }
 
